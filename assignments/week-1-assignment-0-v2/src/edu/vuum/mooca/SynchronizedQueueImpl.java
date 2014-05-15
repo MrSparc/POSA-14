@@ -14,29 +14,35 @@ public class SynchronizedQueueImpl extends SynchronizedQueue {
     // TODO - change this to true if you want to see diagnostic
     // output on the console as the test runs.
     static {
-        diagnosticsEnabled = false;
+        diagnosticsEnabled = true;
     }
 	
     protected void createThreads() {
         // TODO - replace the "null" assignments below to create two
         // Java Threads, one that's passed the mProducerRunnable and
         // the other that's passed the mConsumerRunnable.
-        mConsumer = null;
-        mProducer = null;
+        mConsumer = new Thread(mConsumerRunnable);
+        mProducer = new Thread(mProducerRunnable);
     }
     
     protected void startThreads() {
         // TODO - you fill in here to start the threads. More
         // interesting results will occur if you start the
         // consumer first.
+    	mConsumer.start();
+    	mProducer.start();
     }
 
     protected void interruptThreads() {
         // TODO - you fill in here to interrupt the threads.
+    	mConsumer.interrupt();
+    	mProducer.interrupt();
     }
 
     protected void joinThreads() throws InterruptedException {
         // TODO - you fill in here to wait for the threads to
         // exit.
+    	mConsumer.join();
+    	mProducer.join();
     }
 }            
