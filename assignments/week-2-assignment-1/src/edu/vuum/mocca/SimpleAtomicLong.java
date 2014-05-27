@@ -45,10 +45,12 @@ class SimpleAtomicLong
 
         // TODO -- you fill in here
         mRWLock.readLock().lock();
-        value = mValue;
-        mRWLock.readLock().unlock();
-
-        return value;
+        try {
+            value = mValue;
+            return value;
+        } finally {
+            mRWLock.readLock().unlock();
+        }
     }
 
     /**
@@ -62,11 +64,13 @@ class SimpleAtomicLong
 
         // TODO -- you fill in here
         mRWLock.writeLock().lock();
-        mValue -= 1;
-        value = mValue;
-        mRWLock.writeLock().unlock();
-
-        return value;
+        try {
+            mValue -= 1;
+            value = mValue;
+            return value;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -80,11 +84,13 @@ class SimpleAtomicLong
 
         // TODO -- you fill in here
         mRWLock.writeLock().lock();
-        value = mValue;
-        mValue += 1;
-        mRWLock.writeLock().unlock();
-
-        return value;
+        try {
+            value = mValue;
+            mValue += 1;
+            return value;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -98,11 +104,13 @@ class SimpleAtomicLong
 
         // TODO -- you fill in here
         mRWLock.writeLock().lock();
-        value = mValue;
-        mValue -= 1;
-        mRWLock.writeLock().unlock();
-
-        return value;
+        try {
+            value = mValue;
+            mValue -= 1;
+            return value;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -116,11 +124,13 @@ class SimpleAtomicLong
 
         // TODO -- you fill in here
         mRWLock.writeLock().lock();
-        mValue += 1;
-        value = mValue;
-        mRWLock.writeLock().unlock();
-
-        return value;
+        try {
+            mValue += 1;
+            value = mValue;
+            return value;
+        } finally {
+            mRWLock.writeLock().unlock();
+        }
     }
 }
 
