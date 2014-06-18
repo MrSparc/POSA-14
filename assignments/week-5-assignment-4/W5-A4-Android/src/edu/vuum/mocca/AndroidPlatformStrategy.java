@@ -60,10 +60,12 @@ public class AndroidPlatformStrategy extends PlatformStrategy
         // TODO - You fill in here.
     	Activity activity = mActivity.get();
     	activity.runOnUiThread(new Runnable(){
+    		@Override
     		public void run() { 
-    			mTextViewOutput.setText(outputString);
+    			mTextViewOutput.append(String.format("%s\n", outputString));
         	 }
     		});
+    	
     }
 
     /** Indicate that a game thread has finished running. */
@@ -80,6 +82,7 @@ public class AndroidPlatformStrategy extends PlatformStrategy
     	try {
 			mLatch.await();
 		} catch (InterruptedException e) {
+			errorLog( AndroidPlatformStrategy.class.getName(), e.getMessage() );
 		}
     }
 
