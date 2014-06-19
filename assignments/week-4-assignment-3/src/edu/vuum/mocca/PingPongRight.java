@@ -88,13 +88,16 @@ public class PingPongRight {
              */
 
             // TODO - You fill in here.
-        	for( int i = 1; i <= mMaxLoopIterations; ++i ) 
-        	{
-        		acquire();
-        		System.out.println( mStringToPrint + "(" + i + ")" );
-        		release();
-        		mLatch.countDown();
-        	}
+			try{
+		    	for( int i = 1; i <= mMaxLoopIterations; ++i ) 
+		    	{
+		    		acquire();
+		    		System.out.println( mStringToPrint + "(" + i + ")" );
+		    		release();
+		    	}
+			} finally {
+				mLatch.countDown();
+			}
         }
 
         /**
@@ -125,15 +128,15 @@ public class PingPongRight {
 
         // TODO initialize this by replacing null with the appropriate
         // constructor call.
-        mLatch = new CountDownLatch(2*mMaxIterations);
+        mLatch = new CountDownLatch(2);
 
         // Create the ping and pong SimpleSemaphores that control
         // alternation between threads.
 
         // TODO - You fill in here, make pingSema start out unlocked.
-        SimpleSemaphore pingSema = new SimpleSemaphore(1, true);
+        SimpleSemaphore pingSema = new SimpleSemaphore(1);
         // TODO - You fill in here, make pongSema start out locked.
-        SimpleSemaphore pongSema = new SimpleSemaphore(0, true);
+        SimpleSemaphore pongSema = new SimpleSemaphore(0);
 
         System.out.println(startString);
 
