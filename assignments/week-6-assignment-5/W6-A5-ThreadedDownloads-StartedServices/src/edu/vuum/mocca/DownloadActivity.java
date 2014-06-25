@@ -113,7 +113,7 @@ public class DownloadActivity extends DownloadBase {
             // returned from the makeIntent() factory method.
         
         	Intent intentDownload = DownloadIntentService.makeIntent(getApplicationContext(), handler, getUrlString());
-        	startActivity(intentDownload);
+        	startService (intentDownload);
 
             which = "Starting IntentService";
             break;
@@ -124,7 +124,7 @@ public class DownloadActivity extends DownloadBase {
             // returned from the makeIntent() factory method.
         	
         	Intent intentPool = ThreadPoolDownloadService.makeIntent(getApplicationContext(), handler, getUrlString());
-        	startActivity(intentPool);
+        	startService(intentPool);
         	
 
             which = "Starting ThreadPoolDownloadService";
