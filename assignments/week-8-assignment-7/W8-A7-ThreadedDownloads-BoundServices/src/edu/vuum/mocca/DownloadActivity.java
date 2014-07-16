@@ -3,11 +3,11 @@ package edu.vuum.mocca;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
 /**
  * This is the main Activity that the program uses to start the
@@ -169,12 +169,24 @@ public class DownloadActivity extends DownloadBase {
         case R.id.bound_sync_button:
             // TODO - You fill in here to use mDownloadCall to
             // download the image & then display it
-        	try {
-				String pathname = mDownloadCall.downloadImage(uri);
-				displayBitmap(pathname);
-			} catch (RemoteException e) {
-				Log.e(TAG, e.getMessage());
+	    // Use an AsyncTask to download the image in a 
+	    // separate thread and then display it in the UI thread
+	    new AsyncTask<Uri, Void, String>(){
+	    	
+		      protected String doInBackground(Uri... uris){
+			    try{
+				return mDownloadCall.downloadImage( uris[0] );
+			    } catch(RemoteException e){
+			    	Log.e( TAG, e.getMessage() );
+			    }
+			    return null;
 			}
+
+			protected void onPostExecute(String pathname){
+				displayBitmap( pathname );
+			}
+	    }.execute(uri);
+        	
             break;
 
         case R.id.bound_async_button:
